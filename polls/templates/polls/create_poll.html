@@ -1,0 +1,30 @@
+{% extends "polls/base.html" %}
+{% block content %}
+  <div class="card">
+    <h2 style="margin-top:0;">Create a Poll</h2>
+    <form method="post">
+      {% csrf_token %}
+      <div style="display:grid; gap:10px;">
+        <div>
+          <label>Title</label>
+          {{ form.title }}
+        </div>
+        <div>
+          <label>Description</label>
+          {{ form.description }}
+        </div>
+        <div>
+          <label>Options (one per line)</label>
+          {{ form.options_text }}
+          <div class="badge">{{ form.options_text.help_text }}</div>
+          {% if form.errors.options_text %}
+            <div class="badge" style="color:#ffb3b3;">{{ form.errors.options_text|striptags }}</div>
+          {% endif %}
+        </div>
+        <div>
+          <button class="btn" type="submit">Create</button>
+        </div>
+      </div>
+    </form>
+  </div>
+{% endblock %}

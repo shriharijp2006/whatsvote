@@ -1,0 +1,18 @@
+{% extends "polls/base.html" %}
+{% block content %}
+  <div class="card">
+    <h2 style="margin-top:0;">Recent Polls</h2>
+    {% if polls %}
+      <ul>
+        {% for p in polls %}
+          <li style="margin:8px 0;">
+            <a href="{% url 'poll_detail' p.pk %}">{{ p.title }}</a>
+            <span class="badge">· {{ p.total_votes }} votes</span>
+          </li>
+        {% endfor %}
+      </ul>
+    {% else %}
+      <p>No polls yet. <a href="{% url 'create_poll' %}">Create one</a>.</p>
+    {% endif %}
+  </div>
+{% endblock %}

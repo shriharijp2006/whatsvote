@@ -1,0 +1,32 @@
+{% extends "polls/base.html" %}
+{% block content %}
+  <div class="card">
+    <h2 style="margin-top:0;">{{ poll.title }}</h2>
+    {% if poll.description %}<p>{{ poll.description }}</p>{% endif %}
+
+    {% if voted %}
+      <p class="badge">You have already voted in this poll.</p>
+    {% endif %}
+
+    <form method="post" action="">
+      {% csrf_token %}
+      <div class="options">
+        {% for item in options %}
+          <label class="card" style="margin:0;">
+            <div style="display:flex; align-items:center; gap:10px;">
+              <input type="radio" name="option" value="{{ item.obj.id }}" {% if voted %}disabled{% endif %} required />
+              <div style="flex:1;">
+                <div style="font-weight:600;">{{ item.obj.text }}</div>
+                <div class="bar"><div style="width: {{ item.pct }}%"></div></div>
+                <div class="badge">{{ item.count }} votes · {{ item.pct }}%</div>
+              </div>
+            </div>
+          </label>
+        {% endfor %}
+      </div>
+      <div style="margin-top:12px;">
+        <button class="btn" type="submit" {% if voted %}disabled{% endif %}>Vote</button>
+      </div>
+    </form>
+  </div>
+{% endblock %}
